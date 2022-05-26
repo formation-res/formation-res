@@ -1,3 +1,6 @@
 # FORMATION Developer Portal
 
-Developer portal for [FORMATION Gmbh](https://tryformation.com).
+Refer to our main website to learn more about [FORMATION Gmbh](https://tryformation.com).
+
+Coming here soon: API Documentation.
+
