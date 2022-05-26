@@ -1,2 +1,3 @@
-# formation-res
-Developer portal for FORMATION Gmbh
+# FORMATION Developer Portal
+
+Developer portal for [FORMATION Gmbh](https://tryformation.com).
