@@ -1,8 +1,6 @@
-# FORMATION Developer Portal
+# FORMATION REST API
 
 Refer to our main website to learn more about [FORMATION Gmbh](https://tryformation.com).
-
-## Introduction
 
 The FORMATION REST API is intended for FORMATION customers to provide information about objects to FORMATION. This may include coordinates, meta data, or custom information tags. 
 
