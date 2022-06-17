@@ -82,7 +82,6 @@ The API take a list of tracking events as the payload.
 
 ### Example
 
-
 ```
 POST https://api.tryformation.com/track/location
 Content-Type: application/json
@@ -95,22 +94,17 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJzdWIiOiJHTUp3S0tOV
 	"extraData": {
 		"extra": "data"
 	},
+	"position": {
+	        "lat": 52.51684070030687,
+		"lon": 13.376530188141036,
+		"alt": 50.0
+	},
+	"accuracy": 10.0,
+	"verticalAccuracy: 20.0
 	"locationId": "12345-67890"
 }]
 ```
-
-Curl command for this:
-
-```bash
-curl -X POST -H 'Content-Type: application/json' \
-   -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJzdWIiOiJHTUp3S0tOVVNEbm4xYktKX1NkdEp3Iiwic2NvcGUiOiJBY2Nlc3MiLCJpc3MiOiJ0cnlmb3JtYXRpb24uY29tIiwiZXhwIjoxNjM0Mjk3MzY1LCJpYXQiOjE2MzQyMTA5NjUsInVzZXIiOiJHTUp3S0tOVVNEbm4xYktKX1NkdEp3In0.AAAAAAAAAAAAAAAAAAAAAAAA4KrdjEfJ_jN4oPLHzaCDO97if6gMNcmUCiaVn_E2RpOyjPUmBT8h_L_3ycBp4hRwAAAAAAAAAAAAAAAAAAAAAAAAXa5gtD_QOyVx5vr3t4MMOGOY3q-aiBdEIKedENc7NbIyZ5hkTKV0S22H-OzmNJZs' -d '[{"ts":1634209540113,"groupId":"KkWI3w7BB8PhavWCqVTMow","objectId":"666","extraData":{"extra":"data"},"locationId":"12345-67890"}]' https://api.tryformation.com/track/location
-```
-
-RESPONSE
-
-```txt
-OK
-```
+This will send information about an object to FORMATION.
 
 ### JSON Fields
 
@@ -118,6 +112,9 @@ OK
 - groupId: Id of the FORMATION group for which the tracking events are intended
 - objectId: the external id that is used to identify the object. For example the code encoded by a QR code.
 - locationId: the external id of the location where the object is. This may be another QR code. When a corresponding zone is created in FORMATION with the same external ID, FORMATION will correctly show objects on the map in the right location. Note, you may start sending tracking events before that.
+- position: OPTIONAL, new coordinates for the object. Note, the altitude is optional. Lattitude and longitude must be valid GPS coordinates.
+- accuracy: OPTIONAL the horizontal accuracy in meters
+- verticalAccuracy: OPTIONAL the vertical accuracy in meters
 - extraData: OPTIONAL a JSON object where you can store additional custom attributes and metadata.
 
 ### Extra Data
