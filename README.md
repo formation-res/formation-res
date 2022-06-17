@@ -4,7 +4,7 @@ Refer to our main website to learn more about [FORMATION Gmbh](https://tryformat
 
 ## Introduction
 
-The FORMATION REST API is intended for third parties to provide information about objects to FORMATION. This may include coordinates, meta data, or custom information tags.
+The FORMATION REST API is intended for FORMATION customers to provide information about objects to FORMATION. This may include coordinates, meta data, or custom information tags. 
 
 To use the API, you need the following bits of information that will be provided by FORMATION:
 
@@ -25,7 +25,7 @@ curl https://api.tryformation.com/token?email=person@domain.com&password=secret&
 # or POST
 curl -X POST \
    -H "Content-Type: application/x-www-form-urlencoded" \
-   -d "email=person@domain.com&password=secret" \
+   -d "email=person@domain.com&password=secret&workspace=myworkspace" \
    https://api.tryformation.com/token
 
 ```
@@ -162,8 +162,6 @@ or
 
 Note. while the API responds immediately, it may take up to 20 minutes for the request to process in the background. If you submit a second request during that time you will get a HTTP 429 (Too Many Requests) response.
 
-## Customer Support
+## Support
 
 If you have any issues with using this API or questions about the API, contact [Jilles van Gurp](mailto:jvg@tryformation.com).
-
-You can also use the in app feedback form to send feedback about the UX of the app.
