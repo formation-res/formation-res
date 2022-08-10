@@ -2,15 +2,21 @@
 
 Refer to our main website to learn more about [FORMATION Gmbh](https://tryformation.com).
 
-The FORMATION REST API is intended for FORMATION customers to provide information about objects to FORMATION. This may include coordinates, meta data, or custom information tags.
+The FORMATION REST API is intended for FORMATION customers to provide information about objects in their workspace to FORMATION. This may include coordinates, meta data, or custom information tags.
 
 To use the API, you need the following bits of information that will be provided by FORMATION:
 
-- The API endpoint for your environment, for example this is the endpoint for our multi tenant environment: https://api.tryformation.com/track/location
+- The API endpoint for your environment, for example this is the endpoint for our multi tenant environment: https://api.tryformation.com
 - The ID of the workspace that you are sending information to.
-- A valid JWT token; ask the FORMATION team to get one or get one via the API below using your credentials.
+- A valid JWT token; you can get one via the API below using your credentials. Ask FORMATION for API user credentials.
 
-## GET/POST /token
+## Use Cases
+
+- Provide location updates for objects
+- Update meta data about objects
+- IOT Sensor updates
+
+## `GET/POST /token` - Authenticate
 
 Use the token API to get a JWT token that can be used with the other APIs. You can extract the JWT access token from the response that comes back.
 
@@ -72,7 +78,7 @@ ContentType: application/json
 Authorization: Bearer XXXXXXXXXX
 ```
 
-## POST /track/location
+## `POST /track/location` - Sending updates
 
 Use this API to provide updates to FORMATION about objects in your space.
 
@@ -127,7 +133,7 @@ FORMATION may also offer additional features tailored to your data in the future
 
 Finally, we may expose UI functionality that allows you to customize the UI given specific ExtraData attributes. This is not currently supported.
 
-## POST /objects/extradata
+## `POST /objects/extradata` - Bulk update extra data
 
 Apply extra data to objects that have not been updated recently. You select the objects by specifying a `beforeTs` in time in millis after the Epoch. Anything that has not been updated since then, will be changed. You can use this to e.g. mark the status of markers that have not been updated for a while as closed.
 
@@ -164,3 +170,5 @@ Note. while the API responds immediately, it may take up to 20 minutes for the r
 ## Support
 
 If you have any issues with using this API or questions about the API, contact [Jilles van Gurp](mailto:jvg@tryformation.com).
+
+
