@@ -2,7 +2,7 @@
 
 Refer to our main website to learn more about [FORMATION Gmbh](https://tryformation.com).
 
-The FORMATION REST API is intended for FORMATION customers to provide information about objects to FORMATION. This may include coordinates, meta data, or custom information tags. 
+The FORMATION REST API is intended for FORMATION customers to provide information about objects to FORMATION. This may include coordinates, meta data, or custom information tags.
 
 To use the API, you need the following bits of information that will be provided by FORMATION:
 
@@ -50,7 +50,7 @@ RESPONSE
 ```
 
 From this respsonse, you can use the apiAccessToken until it expires. You can also find your workspace id in there (in the `groups` list)
-The expiration is provided in milliseconds after the epoch. The apiRefreshToken is not currently supported via the REST API. 
+The expiration is provided in milliseconds after the epoch. The apiRefreshToken is not currently supported via the REST API.
 
 Note, the tracker API requires that the user has a special tracker role. FORMATION can set up an account in your team for this. Normal users will not be able to use the tracker API.
 
@@ -74,7 +74,7 @@ Authorization: Bearer XXXXXXXXXX
 
 ## POST /track/location
 
-Use this API to provide updates to FORMATION about objects in your space. 
+Use this API to provide updates to FORMATION about objects in your space.
 
 The API take a list of tracking events as the payload.
 
@@ -91,6 +91,8 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJzdWIiOiJHTUp3S0tOV
 	"objectId": "666",
 	"extraData": {
 		"extra": "data"
+		"more": [1,true,"extra","data"]
+		"this": {"will":"be a serialized json field in a tag"}
 	},
 	"position": {
 	        "lat": 52.51684070030687,
@@ -117,11 +119,13 @@ This will send information about an object to FORMATION.
 
 ### Extra Data
 
-The extra data object is where you can put meta data that is specific to your company that you want to track to FORMATION. Extra data fields must be of type String.
+The extra data object is where you can put meta data that is specific to your company that you want to track to FORMATION. Internally, the values that you put in these objects are stored using tags. You can use json primitives, lists of primitives, or objects. In case of objects, the values will be stored in serialized json form. If you can, please flatten the fields as this simplifies working with the data on our side.
 
 FORMATION will store this data and aggregate the latest version of the data to the objects on the map.
 
 FORMATION may also offer additional features tailored to your data in the future.
+
+Finally, we may expose UI functionality that allows you to customize the UI given specific ExtraData attributes. This is not currently supported.
 
 ## POST /objects/extradata
 
