@@ -4,6 +4,10 @@ Refer to our main website to learn more about [FORMATION Gmbh](https://tryformat
 
 The FORMATION REST API is intended for FORMATION customers to provide information about objects in their workspace to FORMATION. This may include coordinates, meta data, or custom information tags.
 
+- [API Documentation](https://api.tryformation.com/webjars/swagger-ui/index.html).
+
+## Getting started
+
 To use the API, you need the following bits of information that will be provided by FORMATION:
 
 - The API endpoint for your environment, for example this is the endpoint for our multi tenant environment: https://api.tryformation.com
