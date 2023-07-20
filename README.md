@@ -14,24 +14,11 @@ To use the API, you need the following bits of information that will be provided
 - You should use your dns friendly workspace name as the prefix to our domain `https://myworkspace.tryformation.com`
 - A valid JWT token; you can get one via the API below using your credentials. Ask FORMATION for API user credentials.
 
-
-## `GET/POST /token` - Authenticate
+## Getting an API token
 
 Use the token API to get a JWT token that can be used with the other APIs. You can extract the JWT access token from the response that comes back.
 
-The API has two parameters that can either be provided as url parameters (GET) or form parameters (POST).
-
-
-```bash
-# GET
-curl https://api.tryformation.com/token?email=person@domain.com&password=secret&workspace=myworkspace
-# or POST
-curl -X POST \
-   -H "Content-Type: application/x-www-form-urlencoded" \
-   -d "email=person@domain.com&password=secret&workspace=myworkspace" \
-   https://api.tryformation.com/token
-
-```
+- [Login API](https://api.tryformation.com/webjars/swagger-ui/index.html#/Token/loginToWorkspace)
 
 RESPONSE
 
