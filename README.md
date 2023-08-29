@@ -10,48 +10,10 @@ The FORMATION REST API is intended for FORMATION customers to provide informatio
 
 To use the API, you need the following bits of information that will be provided by FORMATION:
 
-- The ID of the workspace that you are sending information to and the workspace name (the dns prefix). 
-- You should use your dns friendly workspace name as the prefix to our domain `https://myworkspace.tryformation.com`
+
 - A valid JWT token; you can get one via the API below using your credentials. Ask FORMATION for API user credentials.
+- The Name and Id of the workspace that you are sending information to and the workspace name. E.g. `demo` and `jRsP7_j9X1DRoAGr-I3GDg` 
 
-## Getting an API token
-
-Use the token API to get a JWT token that can be used with the other APIs. You can extract the JWT access token from the response that comes back.
-
-- [Login API](https://api.tryformation.com/webjars/swagger-ui/index.html#/Token/loginToWorkspace)
-
-RESPONSE
-
-```
-{
-	"userId": "6b86b336-d228-4501-94b8-7984467bda82",
-	"emails": ["person@domain.com"],
-	"firstName": "Jane",
-	"lastName": "Doe",
-	"apiRefreshToken": {
-		"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJzdWIiOiI2Yjg2YjMzNi1kMjI4LTQ1MDEtOTRiOC03OTg0NDY3YmRhODIiLCJzY29wZSI6IlJlZnJlc2giLCJpc3MiOiJ0cnlmb3JtYXRpb24uY29tIiwiZXhwIjoxNjQxOTg5NDA2LCJpYXQiOjE2MzQyMTM0MDZ9.AAAAAAAAAAAAAAAAAAAAAAAAhLjSE7gW5dypFPRD-qJl7wqUuV9Qvc5j7GVkws7-9missEvUpgMj3i1vu_jhqf0tAAAAAAAAAAAAAAAAAAAAAAAAwM0ScKynlmSGUruKmiRa1htnfvvaXJ3-NtK72ZFaUqUZ_KilJqgIKSD4rMA6NOr4",
-		"expiration": 1641989406956
-	},
-	"apiAccessToken": {
-		"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzUxMiJ9.eyJzdWIiOiI2Yjg2YjMzNi1kMjI4LTQ1MDEtOTRiOC03OTg0NDY3YmRhODIiLCJzY29wZSI6IkFjY2VzcyIsImlzcyI6InRyeWZvcm1hdGlvbi5jb20iLCJleHAiOjE2MzQyOTk4MDYsImlhdCI6MTYzNDIxMzQwNiwidXNlciI6IjZiODZiMzM2LWQyMjgtNDUwMS05NGI4LTc5ODQ0NjdiZGE4MiJ9.AAAAAAAAAAAAAAAAAAAAAAAAX4qnK9vUoIOUW6KAOiYLvNGsvf1EUkuvrPLZMsLxBdEhJoxJ1vCDQ4ZYVnEYRklRAAAAAAAAAAAAAAAAAAAAAAAA73eGvFOiTuOnH9XTprA6Jsw2lzuQc7tm6q0Kfr-pJ-Qmw25U_8HJxUh4MDebKn3R",
-		"expiration": 1634299806959
-	},
-	"groups": ["KkWI3w7BB8PhavWCqVTMow"],
-	"tags": []
-}
-```
-
-From this respsonse, you can use the apiAccessToken until it expires. You can also find your workspace id in there (in the `groups` list)
-The expiration is provided in milliseconds after the epoch. The apiRefreshToken is not currently supported via the REST API.
-
-Note, the tracker API requires that the user has a special tracker role. FORMATION can set up an account in your team for this. Normal users will not be able to use the tracker API.
-
-In case of a problem it will respond with the appropriate status codes as well as a problem code.
-
-- 200: OK - you should get a json response similar to the example
-- 400: BAD REQUEST - you will get a message with some details about what was wrong
-- 401: NOT AUTHORIZED - you will get a message with some details about what was wrong
-- 404: NOT FOUND - the url is wrong
 
 ### Using the JWT token
 
@@ -63,6 +25,53 @@ Required headers:
 ContentType: application/json
 Authorization: Bearer XXXXXXXXXX
 ```
+
+### Updating external objects
+
+The most common reason to use our API is updating external objects. An external object is something with a globally unique id that. 
+The goal of using this API is telling us what you know about this object.
+
+```bash
+curl -X 'POST' \
+  'https://api.tryformation.com/groups/<groupID>/externalObjects' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer XXXXXXXXXXXXXX'
+  -d '[
+  {
+    "externalId": "42",
+    "locationUpdate": {
+      "newPosition": {
+        "lat": 52.5,
+        "lon": 13.5
+      }
+    },
+    "fieldValues": [
+      {
+        "my-field": "42"
+      },
+      {
+        "my-category-field": {
+          "namespace": "colors",
+          "value": "red"
+        }
+      }
+    ],
+    "initialExternalObject": {
+      "title": "My External Object"
+    }
+  }
+]'
+```
+
+There are three things in this request:
+
+- `externalId`: Required. A globally unique identifier for your external object. There can be only one object with this id in our system. And if that object already exists in another workspace, you won't have the right to update it. Make sure that you always use the same id to refer to your objects. UUIDs are good for this.
+- `locationUpdate`. Optional. A new location in WGS 84 decimal form with a `lat`, `lon`, and optionally an `alt` field for the altitude (meters above sea level) 
+- `fieldValues`. Optional. Field values. While you can use free form fields, you should coordinate with FORMATION to ensure the field definitions are created. 
+- `initialExternalObject`. Optional. You can specify some values for things like the object title here. If the object does not exist yet, it will get created with these values. Note, you can always edit the object in the FORMATION app as well after you call this for the first time.
+
+You MUST specify either a `locationUpdate` and/or `fieldValues`. Empty updates are not allowed. The first update MUST contain a `locationUpdate`.
 
 ## Support
 
