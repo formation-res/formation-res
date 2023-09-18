@@ -47,31 +47,28 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer XXXXXXXXXXXXXX'
-  -d '[
-  {
-    "externalId": "42",
-    "locationUpdate": {
-      "newPosition": {
-        "lat": 52.5,
-        "lon": 13.5
-      }
-    },
-    "fieldValues": [
-      {
-        "my-field": "42"
-      },
-      {
-        "my-category-field": {
-          "namespace": "colors",
-          "value": "red"
-        }
-      }
-    ],
-    "initialExternalObject": {
-      "title": "My External Object"
-    }
-  }
-]'
+  -d '[{
+	  "externalId": "myobjectid",
+	  "locationUpdate": {
+		  "newPosition": {
+			  "lat": 51.99893651296793,
+			  "lon": 13.002826256576668
+		  }
+	  },
+	  "fieldValues": [{
+		 	"type": "String",
+			"field": "myfield",
+			"value": "123"
+		}, {
+			"type": "Category",
+			"field": "color-code",
+			"value": {
+				"namespace": "color ",
+				"categoryName": "red"
+			}
+		}
+	]
+}]'
 ```
 
 - `externalId`: Required. A globally unique identifier for your external object. There can be only one object with this id in our system. And if that object already exists in another workspace, you won't have the right to update it. Make sure that you always use the same id to refer to your objects. UUIDs are good for this.
